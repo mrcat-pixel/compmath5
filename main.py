@@ -30,7 +30,9 @@ def ret_functions(inp):
         solution    = lambda x, c:    math.e**(0.00001*coef*x**2/2 + c)
         calc_c      = lambda x, y:    math.log(y) - 0.00001*coef*x**2/2
     
-    print("The entered function is: \n" + get_func_description(id, frm(coef)))
+    func_description = get_func_description(id, frm(coef))
+    print("The entered function is: \n" + func_description)
+    plot_set_title(func_description)
     return func, solution, calc_c
 
 
@@ -64,13 +66,11 @@ def plot_solution(x0, x1, solution, c):
 
 def plot_points(points):
     x, y = np.array(points[0]), np.array(points[1])
-    plt.plot(x, y, 'g', label="Euler method")
+    plt.plot(x, y, 'g', label="Euler method solution")
 
 
-def plot_show():
-    plt.title("Differential equation solution")
-    plt.legend(loc='upper left')
-    plt.show()
+def plot_set_title(func):
+    plt.title("Solution for " + func)
 
 
 def method(x0, x1, y0, n, func):
@@ -88,7 +88,8 @@ def calc(x0, x1, y0, n, func, solution, calc_c):
     try:
         plot_points(method(x0, x1, y0, n, func))
         plot_solution(x0, x1, solution, calc_c(x0, y0))
-        plot_show()
+        plt.legend(loc='upper left')
+        plt.show()
     except ZeroDivisionError:
         print(  "Encountered a division by zero while trying to calculate the solution.\n"
                 "Please use different arguments.")
