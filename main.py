@@ -5,7 +5,6 @@ import numpy as np
 
 LINE = "-----------------------------------------"
 def frm(num): return "{:.4f}".format(num)
-def print_err(): print("Incorrect command. To see the list of commands, type \"h\".")
 
 
 def get_func_description(id, coef):
@@ -84,10 +83,9 @@ def method(x0, xn, y0, n, func):
 
 def calc(x0, xn, y0, n, func, solution, calc_c):
     try:
-        plot_points( method(x0, xn, y0, n, func) )
-        plot_solution( x0, xn, solution, calc_c(x0, y0) )
+        plot_points(method(x0, xn, y0, n, func))
+        plot_solution(x0, xn, solution, calc_c(x0, y0))
         plot_show()
-
     except ZeroDivisionError:
         print(  "Encountered a division by zero while trying to calculate the solution.\n"
                 "Please use different arguments.")
@@ -96,8 +94,8 @@ def calc(x0, xn, y0, n, func, solution, calc_c):
                 "Please use different arguments.")
     
 
-def prompt():
-    x0, xn, y0, n = -10, 10, 1, 1000
+def main_loop():
+    x0, xn, y0, n = -10, 10, 5, 1000
     func, solution, calc_c = lambda x, y: 0, lambda x, c: c, lambda x, y: y
     while True:
         try:                inp = input("> ")
@@ -111,9 +109,9 @@ def prompt():
         elif inp == "calc": calc(x0, xn, y0, n, func, solution, calc_c)
         elif inp == "h":    print_help()
         elif inp == "q":    break
-        else:               print_err()
+        else:               print("Incorrect command. To see the list of commands, type \"h\".")
 
 
 print(  "Welcome to the differential equation calculator.\n" 
         "To see the list of commands, type \"h\". To quit, type \"q\".\n" + LINE )
-prompt()
+main_loop()
